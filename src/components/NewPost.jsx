@@ -1,17 +1,29 @@
 import React, { useState } from "react";
-import { createNewPost } from "../api/posts";
+import { useMutatePost } from "../hooks/posts";
 
 function NewPost() {
+
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const {mutate,mutateAsync,error,isLoading,isSuccess,reset} = useMutatePost()
+
+  /*const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);*/
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setIsLoading(true);
+    mutate({ title, body },{
+      onSuccess: () => {
+        setTitle('')
+        setBody('')
+      }
+    })
+
+    //mutateAsync({})
+
+    /*setIsLoading(true);
     try {
       await createNewPost({ title, body });
 
@@ -21,7 +33,7 @@ function NewPost() {
       setError(error);
     }
 
-    setIsLoading(false);
+    setIsLoading(false);*/
   };
 
   return (
@@ -67,10 +79,10 @@ function NewPost() {
             Error creating the post: {error.message}
           </p>
         )}
-        {/* <div className="alert alert-success alert-dismissible" role="alert">
+        {isSuccess && <div className="alert alert-success alert-dismissible" role="alert">
           The post was saved successfuly
-          <button type="button" className="btn-close"></button>
-        </div> */}
+          <button onClick={reset} type="button" className="btn-close"></button>
+        </div>}
       </form>
     </section>
   );

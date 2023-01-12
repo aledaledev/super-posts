@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getPostById } from "../api/posts";
+import { usePost } from "../hooks/posts";
 
 export default function Post({ postId }) {
-  const {data:post, error, isLoading} = useQuery(['posts',postId],() => getPostById(postId))
+  const {data:post, error, isLoading} = usePost(postId)
 
   /*const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);

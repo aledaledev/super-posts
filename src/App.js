@@ -21,7 +21,7 @@ export default function App() {
         <Post postId={postId} setPostId={setPostId} />
       ) : (
         <div className="row gap-4">
-          <div className="col-md">
+           <div className="col-md">
             <NewPost />
           </div> 
           <div className="col-md">
